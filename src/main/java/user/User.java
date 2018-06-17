@@ -1,6 +1,8 @@
 package user;
 
+import javax.swing.text.DateFormatter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +67,23 @@ public class User {
         return this.interests.subList(0, this.interests.size());
     }
 
+    public String userDataToStringLine() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("firstName=%s lastName=%s sex=%s", getFirstName(), getLastName(), getSex()));
+        if(getHeight() > 0) sb.append(" height=" + getHeight());
+        if(getBirthDate() != null) sb.append(" birthDate=" + getBirthDate());
+        if(getInterests().size() > 0) {
+            StringBuilder interestBuilder = new StringBuilder();
+            String[] interestArray = new String[getInterests().size()];
+            interestArray = getInterests().toArray(interestArray);
+            for(String singleInterest : interestArray) interestBuilder.append("\""+singleInterest+"\",");
+            interestBuilder.deleteCharAt(interestBuilder.length() - 1);
+            sb.append(" interests=");
+            sb.append(interestBuilder);
+        }
+        return sb.toString();
+    }
+
     @Override
     public boolean equals(Object o) {
         if(o == null || o.getClass() != getClass()) return false;
@@ -72,6 +91,19 @@ public class User {
 
         User user = ((User)o);
         return user.getFirstName().equals(getFirstName()) && user.getLastName().equals(getLastName()) && user.getSex().equals(getSex());
+    }
+
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String birthDate = getBirthDate() != null ? getBirthDate().format(formatter) : ("Not initialized");
+
+        return String.format("* First name: %s | Last name: %s" + System.lineSeparator() +
+                "* Sex: %s | Height: %d | Birth date: %s" + System.lineSeparator() +
+                "* Interests: %s",
+                getFirstName(), getLastName(), getSex().getTypeName(), getHeight(), birthDate, getInterests()
+        );
+
     }
 
     private boolean isValidName(String name) {

@@ -1,5 +1,9 @@
-package dataimport;
+package data.dimport;
+
+import user.Users;
+
+import java.io.IOException;
 
 public interface Importer {
-    void importData();
+    void importData(Users userList) throws IOException;
 }

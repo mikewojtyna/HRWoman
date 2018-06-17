@@ -1,4 +1,4 @@
-package dataimport;
+package data.dimport;
 
 import user.Users;
 
@@ -6,38 +6,25 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Map;
 
-public class FileDataRunner extends InputResources {
 
-    private final Users usersList;
+/*
+* Object of this class, will read users data from file that is specified in pathToFile argument from constructor.
+* The read data will be processed by class ListDataRunner.
+* */
+public class FileDataRunner implements Importer {
+
     private final Path pathToFile;
 
-    public FileDataRunner(Users usersList, Path pathToFile) {
-        this.usersList = usersList;
+    public FileDataRunner(Path pathToFile) {
         this.pathToFile = pathToFile;
     }
 
     @Override
-    public void importData() {
-        if(Files.exists(pathToFile)) {
-            try {
-                List<String> lines = Files.readAllLines(pathToFile);
-                if(lines != null) {
-
-                    Map<String, String> keysAndValues;
-
-                    for (String line : lines) {
-                        keysAndValues = parseSingleLine(line);
-                        if (validKeysAndValues(keysAndValues)) {
-                            addUserToList(usersList, keysAndValues.get(FIRST_NAME), keysAndValues.get(LAST_NAME), getSexFromMap(keysAndValues), getHeightFromMap(keysAndValues), getBirthDateFromMap(keysAndValues), getInterestsListFromMap(keysAndValues));
-                        }
-                        keysAndValues.clear();
-                    }
-                }
-            } catch (IOException e) {
-                System.out.println("Cannot read data from file");
-            }
+    public void importData(Users usersList) throws IOException {
+        if(Files.exists(pathToFile)) { //Do not throw exception! If it's first start, file can't exists and its no mistake.
+            List<String> lines = Files.readAllLines(pathToFile);
+            new ListDataRunner(lines).importData(usersList);
         }
     }
 }

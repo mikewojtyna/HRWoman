@@ -1,42 +1,28 @@
-package dataimport;
+package data.dimport;
 
-import user.Sex;
-import user.User;
 import user.Users;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
+/*
+* Objects of this class read data from String array (ex. from console). Data are converted to List of strings, and will
+* be processed by ListDataRunner.
+* */
 
-public class CommandLineRunner extends InputResources {
-    private Users usersList;
-    private String[] dataFromConsole;
+public class CommandLineRunner extends RunnerResources {
+    private List<String> dataFromConsole = new ArrayList<>();
 
-    private final String FIRST_NAME = "firstName";
-    private final String LAST_NAME = "lastName";
-
-
-    public CommandLineRunner(Users usersList, String[] dataFromConsole) {
-        this.dataFromConsole = dataFromConsole;
-        this.usersList = usersList;
-    }
-
-    @Override
-    public void importData() {
+    public CommandLineRunner(String[] dataFromConsole) {
         if(dataFromConsole != null) {
-
-            Map<String, String> keysAndValues;
-
-            for (String line : dataFromConsole) {
-                keysAndValues = parseSingleLine(line);
-                if (validKeysAndValues(keysAndValues)) {
-                    addUserToList(usersList, keysAndValues.get(FIRST_NAME), keysAndValues.get(LAST_NAME), getSexFromMap(keysAndValues), getHeightFromMap(keysAndValues), getBirthDateFromMap(keysAndValues), getInterestsListFromMap(keysAndValues));
-                }
-                keysAndValues.clear();
-            }
+            this.dataFromConsole.addAll(Arrays.asList(dataFromConsole));
         }
     }
 
+    @Override
+    public void importData(Users usersList) {
+        new ListDataRunner(dataFromConsole).importData(usersList);
+    }
 
 }
