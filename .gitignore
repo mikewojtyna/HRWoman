@@ -1,4 +1,6 @@
 */target/
+target/
+usersResources/
 
 # Ignore everything inside .idea except of code styles
 .idea/
