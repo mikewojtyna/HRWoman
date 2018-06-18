@@ -30,6 +30,7 @@ class UserTest {
                 {"Test", "LongNameLongNameLongNameLongName", Sex.MALE}
         };
 
+        // isExactlyInstanceOf zawsze zwroci true, bo to zapewnia nam sam system typów - User zawsze jest Userem, więc ten test nie robi dokładnie nic        
         for (Object[] row : data) {
             assertThat(new User((String) row[0], (String) row[1], (Sex) row[2])).isExactlyInstanceOf(User.class);
         }
