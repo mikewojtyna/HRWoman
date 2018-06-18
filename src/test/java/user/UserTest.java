@@ -30,6 +30,8 @@ class UserTest {
                 {"Test", "LongNameLongNameLongNameLongName", Sex.MALE}
         };
 
+        // 1. isExactlyInstanceOf zawsze zwroci true, bo to zapewnia nam sam system typów - User zawsze jest Userem, więc ten test nie robi dokładnie nic        
+        // 2. Jeśli chciałeś odpalić test z różnymi parametrami sprawdź coś takiego jak CsvSource z JUnit 5
         for (Object[] row : data) {
             assertThat(new User((String) row[0], (String) row[1], (Sex) row[2])).isExactlyInstanceOf(User.class);
         }
@@ -152,6 +154,8 @@ class UserTest {
         assertThat(new User("Test", "Test", Sex.MALE, 0, null, interests)).isExactlyInstanceOf(User.class);
     }
 
+    // 1. To jest na 100% zbyt skomplikowane, prawdopodobnie sprawdzasz zbyt duzo - w ten sposob moglbys cale zycie tylko testy pisac :)
+    // 2. Ja nawet nie mam siły tego czytać
     @DisplayName("Test saving data from constructor to class fields (data from getters)")
     @Test
     void checkConstructorDataSaving() {
