@@ -19,6 +19,7 @@ class UsersTest {
         users = new Users();
     }
 
+    // 1. Trochę to zamieszane, za dużo ukryasz w metodac a opis też nie jest dla mnie jasny
     @DisplayName("userDataToStringArray: Test output string lines data from list of users")
     @Test
     void listOfUsers() {
@@ -34,6 +35,7 @@ class UsersTest {
         assertThat(users.add(null)).isFalse();
     }
 
+    // 1. Co to właściwie znaczy Valid? W tej chwili po prostu sprawszasz, czy metoda users.add zwraca true dla roznych argumentow
     @DisplayName("Checking if add method is valid, and return true")
     @Test
     void checkAddMethod() {
@@ -45,6 +47,7 @@ class UsersTest {
         assertThat(users.add(new User("TestF", "TestF", Sex.MALE))).isTrue();
     }
 
+    // 1. Tak samo jak w analogicznym tescie - efektywnie sprawdzasz tylko, czy ta metoda zwraca boolean - nie sprawdzasz, czy rzeczywiscie cos zostalo dodane
     @DisplayName("Checking duplicated users")
     @Test
     void checkDuplicatedValues() {
@@ -57,6 +60,8 @@ class UsersTest {
         assertThat(users.add(new User("TestF", "TestF", Sex.MALE))).isFalse();
     }
 
+    // 1. nie masz po co sprawdzac czy metoda, ktora zwraca typ rzeczywiscie go zwraca jako taki typ
+    // 2. juz predzej sprawdz czy isNotNull, ale i tak mi sie tutaj to nie podoba
     @DisplayName("Check valid user id")
     @Test
     void checkUserId() {
@@ -68,6 +73,7 @@ class UsersTest {
         assertThat(users.getUserById(new Random().nextInt(users.getUsersCounter()))).isInstanceOf(User.class);
     }
 
+    // 1. Opis jest niejasny, powinines zmienic na "should return null when find user by non-existent id"
     @DisplayName("Check invalid users id")
     @Test
     void checkInvalidUserId() {
@@ -82,6 +88,7 @@ class UsersTest {
         assertThat(users.remove(null)).isFalse();
     }
 
+    // 1. While w tescie - to juz wyglada zle
     @DisplayName("Check removing users from list")
     @Test
     void removeUsersFromList() {
@@ -93,6 +100,7 @@ class UsersTest {
         }
     }
 
+    // 1. Znowu - sprawdzasz tylko boolean, nic wiecej
     @DisplayName("Check removing not exits users from list")
     @Test
     void removeNonExistsUsersFromList() {
